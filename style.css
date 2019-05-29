@@ -8,9 +8,12 @@
   height: 100%;
   background-color: #f8f9fa;
 }
+.search{
+  margin-top: 15px;
+}
 #search-box{
   width: 100%;
-  margin-top:
+  height:45px;
 }
 .intro{
   margin:0 auto;
@@ -23,6 +26,9 @@
 }
 #title{
   font-size: 50px;
+}
+.row.buttons{
+  margin-top: 15px;
 }
 .result>*{
   margin:0 auto;
