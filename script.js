@@ -1,15 +1,36 @@
 function getinput(){
+    document.getElementById("result").innerHTML =" ";
+    document.getElementById("result_name").innerHTML =" ";
+    document.getElementById("result_used_for").innerHTML =" ";
+    document.getElementById("result_used_by").innerHTML =" ";
     var variable = document.getElementById('search_box').value.toUpperCase();
     console.log(variable);
-    search(variable);
+    result=search(variable);
+    var result_name_before="The extension ";
+    var result_used_for_before="is used for ";
+    var result_used_by_before="and used by ";
+    var missing_data=0;
+    for (var i = 0; i < result.length; i++) {
+      if (result[i]==null) {
+        missing_data++;
+      }
+    }
+    if (missing_data==3) {
+      document.getElementById("result").innerHTML = "The extension was not found in the database" ;
+      document.getElementById("result_name").innerHTML = "" ;
+      document.getElementById("result_used_for").innerHTML = "" ;
+      document.getElementById("result_used_by").innerHTML = "" ;
+    }else{
+      document.getElementById("result").innerHTML ="The extension was found in the database";
+      document.getElementById("result_name").innerHTML =result_name_before.italics()+result[0].bold().fontsize(6);
+      document.getElementById("result_used_for").innerHTML =result_used_for_before.italics()+result[1].bold().fontsize(6);
+      document.getElementById("result_used_by").innerHTML =result_used_by_before.italics()+result[2].bold().fontsize(6);
+    }
 }
 function search(arg){
   var found = false;
   var i =0;
   for (i; i < filename_list.length; i++) {
-    console.log("searching.");
-    console.log("searching..");
-    console.log("searching...");
     if (found == false && filename_list[i][0]==arg) {
       var name = filename_list[i][0] ;
       var used_for = filename_list[i][1] ;
@@ -21,15 +42,10 @@ function search(arg){
       // break;
     }
   }
-  var result_name_before="The extension ";
-  var result_used_for_before="is used for ";
-  var result_used_by_before="and used by ";
-  document.getElementById("result").innerHTML ="The extension was found in the database";
-  document.getElementById("result_name").innerHTML =result_name_before.italics()+name.bold().fontsize(6);
-  document.getElementById("result_used_for").innerHTML =result_used_for_before.italics()+used_for.bold().fontsize(6);
-  document.getElementById("result_used_by").innerHTML =result_used_by_before.italics()+used_by.bold().fontsize(6);
-
+  var infos = new Array(name, used_for, used_by);
+  return infos;
 }
+
 var filename_list = [
   ['A','ADA source code file',''],
   ['A','Library','Unix'],
